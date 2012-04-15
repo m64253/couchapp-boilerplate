@@ -1,3 +1,0 @@
-curl -L https://github.com/m64253/couchapp-boilerplate/tarball/master | tar -xz; 
-cd into...
-npm install
