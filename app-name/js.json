@@ -1,0 +1,10 @@
+[
+	"lib/jquery.js",
+	"lib/underscore.js",
+	"lib/backbone.js",
+	"lib/component.js",
+	"lib/base.js",
+	"lib/app.js",
+	
+	"components/main/js/main.js"
+]

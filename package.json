@@ -1,0 +1,10 @@
+{
+	"name": "couchapp-boilerplate",
+	"version": "0.0.0",
+	"private": true,
+	"dependencies": {
+		"couchapp"		: "0.9.0",
+		"uglify-js"		: "1.2.6",
+		"cssmin"		: "0.3.1"
+	}
+}

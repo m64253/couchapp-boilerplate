@@ -1,0 +1,1 @@
+var shows = module.exports = {};

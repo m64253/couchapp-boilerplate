@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>CouchBoiler</title>	
+	<link rel="stylesheet" type="text/css" href="assets/<%= version %>/css/<%= name %>.css" />
+</head>
+<body>
+
+<script src="assets/<%= version %>/js/<%= name %>.js"></script>
+<script>
+APP.register('version', '<%= version %>');
+<% _.forEach(bootstrap, function (data, name) { %>
+APP.register('app.<%= name %>', <%= JSON.stringify(data) %>);
+<% }); %>
+<% _.forEach(components, function (component, name) { %>
+APP.register('<%= name %>', <%= component %>);
+<% }); %>
+APP.use('main');
+</script>
+</body>
+</html>
