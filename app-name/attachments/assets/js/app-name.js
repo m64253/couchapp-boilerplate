@@ -10725,7 +10725,7 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
     set: function(key, value, options) {
       var attrs, attr, val;
 
-      // Handle both `"key", value` and `{key: value}` -style arguments.
+      // Handle both
       if (_.isObject(key) || key == null) {
         attrs = key;
         options = value;
@@ -12074,6 +12074,8 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
 			
 				// Put the name, dependencies and the component builder in a custom object for later use
 				this._REGISTRY[name] = new Builder(name, deps, builder, this);
+				
+				return this;
 			},
 		
 		
@@ -12108,9 +12110,7 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
 					// Test if all components are ready, if so call the 
 					done = function () {
 						clearTimeout(timer);
-						if (callback) {
-							callback.apply(scope || callback, args);
-						}
+						callback.apply(scope || callback, args);
 					},
 				
 					// Attempt to get component
