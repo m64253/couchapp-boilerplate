@@ -3,8 +3,7 @@ var couchapp = require('couchapp'),
 	fs = require('fs'),
 	path = require('path'),
 	
-	basePath = path.join(__dirname, '../'),
-	attachmentsPath = path.join(basePath, 'attachments'),
+	attachmentsPath = path.join(__dirname, 'attachments'),
 	componentsPath = path.join(attachmentsPath, 'components'),
 	assetsPath = path.join(attachmentsPath, 'components'),
 	libPath = path.join(attachmentsPath, 'lib'),
@@ -12,10 +11,10 @@ var couchapp = require('couchapp'),
 	_ = require(path.join(libPath, 'underscore')),
 	builder = require(path.join(libPath, 'builder')),
 	
-	designName = path.basename(__dirname),
+	appName = path.basename(__dirname),
 	
 	designDocument = module.exports = {
-		_id			: '_design/' + designName,
+		_id			: '_design/' + appName,
 		rewrites	: require('./rewrites'),
 		views		: require('./views'),
 		shows		: require('./shows'),
@@ -34,7 +33,7 @@ couchapp.loadAttachments(designDocument, attachmentsPath);
 /**
  * Load Templates
  */
-designDocument.templates = couchapp.loadFiles(path.join(basePath, 'templates'));
+designDocument.templates = couchapp.loadFiles(path.join(__dirname, 'templates'));
 
 
 /**
@@ -73,5 +72,5 @@ designDocument.lib = couchapp.loadFiles(path.join(attachmentsPath, 'lib'));
 /**
  * Build
  */
-builder.build(attachmentsPath, require('./js.json'), 'assets/js/' + designName + '.js');
-builder.build(attachmentsPath, require('./css.json'), 'assets/css/' + designName + '.css');
+builder.build(attachmentsPath, require('./build-js.json'), 'assets/js/' + appName + '.js');
+builder.build(attachmentsPath, require('./build-css.json'), 'assets/css/' + appName + '.css');

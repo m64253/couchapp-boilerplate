@@ -12,8 +12,6 @@ var fs = require('fs'),
 		
 		toFile = path.join(basePath, toFile);
 		
-		console.log(toFile);
-		
 		var dirname = path.dirname(toFile),
 			data;
 	
@@ -30,6 +28,8 @@ var fs = require('fs'),
 				throw new Error('Error unable to find file: "' + filePath + '"');
 			}
 		});
+		
+		console.log('concat:', path.basename(toFile));
 		
 		fs.writeFileSync(toFile, data.join('\n'));
 	},
@@ -72,6 +72,8 @@ var fs = require('fs'),
 		} else if (extName === '.css') {
 			fileContents = cssmin.cssmin(fileContents);
 		}
+		
+		console.log('minify:', path.basename(toFile));
 		
 		fs.writeFileSync(toFile, fileContents);
 	},
