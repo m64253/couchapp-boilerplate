@@ -6,9 +6,23 @@ var fs = require('fs'),
 	
 	
 	/**
+	 * Create file
+	 */
+	writeFile = exports.writeFile = function (toFile, fileContents) {
+		if (typeof fileContents !== 'string') {
+			fileContents = 'module.exports = ' + JSON.stringify(fileContents);
+		}
+		fs.writeFileSync(toFile, fileContents);
+	},
+	
+	
+	/**
 	 * Concat
 	 */
 	concat = exports.concat = function (basePath, files, toFile) {
+		"use strict";
+		
+		
 		
 		toFile = path.join(basePath, toFile);
 		
@@ -20,18 +34,19 @@ var fs = require('fs'),
 		}
 	
 		data = files.map(function (file) {
-			var filePath = path.join(basePath, file);
+			var filePath = path.resolve(basePath, file);
 			
 			if (path.existsSync(filePath)) {
 				return fs.readFileSync(filePath, 'utf8');
-			} else {
-				throw new Error('Error unable to find file: "' + filePath + '"');
 			}
+			
+			throw new Error('Error unable to find file: "' + filePath + '"');
 		});
 		
 		console.log('concat:', path.basename(toFile));
 		
-		fs.writeFileSync(toFile, data.join('\n'));
+		// Write file
+		writeFile(toFile, data.join('\n'));
 	},
 	
 	
@@ -39,6 +54,8 @@ var fs = require('fs'),
 	 * Minify
 	 */
 	minify = exports.minify = function (basePath, fromFile, toFile) {
+		"use strict";
+		
 		fromFile = path.join(basePath, fromFile);
 		toFile = path.join(basePath, toFile);
 		
@@ -75,7 +92,8 @@ var fs = require('fs'),
 		
 		console.log('minify:', path.basename(toFile));
 		
-		fs.writeFileSync(toFile, fileContents);
+		// Write file
+		writeFile(toFile, fileContents);
 	},
 	
 	
@@ -83,6 +101,8 @@ var fs = require('fs'),
 	 * Build
 	 */
 	build = exports.build = function (basePath, files, toFile) {
+		"use strict";
+		
 		var extName,
 			minFile;
 		
@@ -94,4 +114,28 @@ var fs = require('fs'),
 		
 		// Minify
 		minify(basePath, toFile, minFile);
+	},
+	
+	
+	/**
+	 * Find in dir
+	 */
+	findInDir = exports.findInDir = function (dir, extname) {
+		"use strict";
+		
+		var files = [];
+		fs.readdirSync(dir).forEach(function (file) {
+			var filePath = path.join(dir, file),
+				stat = fs.statSync(filePath);
+			
+			if (stat.isDirectory()) {
+				
+				files = files.concat(findInDir(filePath, extname));
+				
+			} else if (stat.isFile() && path.extname(file) === extname) {
+				files.push(filePath);
+			}
+		});
+		
+		return files;
 	};
