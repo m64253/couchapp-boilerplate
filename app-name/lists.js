@@ -8,12 +8,7 @@ lists.index = function (head, req) {
 			"Content-Type": "text/html"
 		}
 	 });
-	
-	log('head:', head);
-	log(head);
-	log('req');
-	log(req);
-	
+		
 	var _ = require('lib/underscore'),
 		data = [],
 		context = {

@@ -1,4 +1,4 @@
-modules.exports = function (newDoc, oldDoc, userCtx) {
+module.exports = function (newDoc, oldDoc, userCtx) {
 	// Admins - Allow
 	if (userCtx.roles.indexOf('_admin') === -1) {
 		throw({

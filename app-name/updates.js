@@ -1,0 +1,1 @@
+var updates = module.exports = {};
